@@ -18,13 +18,12 @@ const slides = [
 ]
 
 
-
-
-//etape 4
 const carouselDots = document.querySelectorAll(".dot");
 const bannerImg = document.querySelector(".banner-img");
 const nextArrow = document.querySelector(".arrow_right");
 const prevArrow = document.querySelector(".arrow_left");
+
+const changeText = document.querySelector("#change");
 
 let currentIndex = 0;
 
@@ -40,9 +39,12 @@ nextArrow.addEventListener("click",()=>{
 	if(currentIndex === slides.length - 1){
 		currentIndex = 0;
 		bannerImg.src = "./assets/images/slideshow/"+slides[currentIndex].image;
+		changeText.innerHTML = slides[currentIndex].tagLine;
+
 	} else{
 		currentIndex = currentIndex + 1;
 		bannerImg.src = "./assets/images/slideshow/"+slides[currentIndex].image;
+		changeText.innerHTML = slides[currentIndex].tagLine;
 	}
 	//ajout de la classe "dot_selected" au point que je rejoins
 	carouselDots[currentIndex].classList.add("dot_selected");
@@ -57,9 +59,11 @@ prevArrow.addEventListener("click",()=>{
 	if(currentIndex === 0){
 		currentIndex = slides.length - 1;
 		bannerImg.src = "./assets/images/slideshow/"+slides[currentIndex].image;
+		changeText.innerHTML = slides[currentIndex].tagLine;
 	} else{
 		currentIndex = currentIndex - 1;
 		bannerImg.src = "./assets/images/slideshow/"+slides[currentIndex].image;
+		changeText.innerHTML = slides[currentIndex].tagLine;
 	}
 	//ajout de la classe "dot_selected" au point que je rejoins
 	carouselDots[currentIndex].classList.add("dot_selected");
