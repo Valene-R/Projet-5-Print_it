@@ -1,3 +1,4 @@
+// Contenu des diapositives (images et textes)
 const slides = [
 	{
 		"image":"slide1.jpg",
@@ -17,7 +18,7 @@ const slides = [
 	}
 ]
 
-
+// Sélection des éléments du DOM
 const carouselDots = document.querySelectorAll(".dot");
 const bannerImg = document.querySelector(".banner-img");
 const nextArrow = document.querySelector(".arrow_right");
@@ -25,50 +26,75 @@ const prevArrow = document.querySelector(".arrow_left");
 
 const changeText = document.querySelector("#change");
 
+// Index de la slide en cours
 let currentIndex = 0;
 
-//set initial active slide and dot
+//définition des valeurs par défaut du carrousel
 carouselDots[currentIndex].classList.add("dot_selected");
 bannerImg.src = "./assets/images/slideshow/" + slides[currentIndex].image;
 
-//next image
-nextArrow.addEventListener("click",()=>{
+/**
+ * Fonction pour afficher la slide suivante lors du clic sur la flèche droite (arrow_right)
+ */
+nextArrow.addEventListener("click", () => {
 	//suppression de la class"dot_selected" du point que je quitte
 	carouselDots[currentIndex].classList.remove("dot_selected");
-	//changement d'image en fonction de ma position dans le tableau
-	if(currentIndex === slides.length - 1){
-		currentIndex = 0;
-		bannerImg.src = "./assets/images/slideshow/"+slides[currentIndex].image;
-		changeText.innerHTML = slides[currentIndex].tagLine;
 
-	} else{
-		currentIndex = currentIndex + 1;
-		bannerImg.src = "./assets/images/slideshow/"+slides[currentIndex].image;
-		changeText.innerHTML = slides[currentIndex].tagLine;
+	//changement de l'image et du texte en fonction de ma position dans le tableau
+	if(currentIndex >= slides.length - 1){
+		currentIndex = 0;	
+	} else {
+		//currentIndex = currentIndex + 1;
+		currentIndex++;
 	}
+	
+	bannerImg.src = "./assets/images/slideshow/" + slides[currentIndex].image;
+	changeText.innerHTML = slides[currentIndex].tagLine;
+	
 	//ajout de la classe "dot_selected" au point que je rejoins
 	carouselDots[currentIndex].classList.add("dot_selected");
-	});
+});
 	
-
-//previous image
+/**
+ * Fonction pour afficher la slide précédente lors du clic sur la flèche gauche (arrow_left)
+ */
 prevArrow.addEventListener("click",()=>{
 	//suppression de la class"dot_selected" du point que je quitte
 	carouselDots[currentIndex].classList.remove("dot_selected");
-	//changement d'image en fonction de ma position dans le tableau
-	if(currentIndex === 0){
-		currentIndex = slides.length - 1;
-		bannerImg.src = "./assets/images/slideshow/"+slides[currentIndex].image;
-		changeText.innerHTML = slides[currentIndex].tagLine;
-	} else{
-		currentIndex = currentIndex - 1;
-		bannerImg.src = "./assets/images/slideshow/"+slides[currentIndex].image;
-		changeText.innerHTML = slides[currentIndex].tagLine;
+
+	//changement de l'image et du texte en fonction de ma position dans le tableau
+	if(currentIndex <= 0){
+		currentIndex = slides.length - 1;	
+	} else {
+		//currentIndex = currentIndex - 1;
+		currentIndex--;
 	}
+
+	bannerImg.src = "./assets/images/slideshow/" + slides[currentIndex].image;
+	changeText.innerHTML = slides[currentIndex].tagLine;
+	
 	//ajout de la classe "dot_selected" au point que je rejoins
 	carouselDots[currentIndex].classList.add("dot_selected");
+});
+
+
+/**
+ * Gestion du clic sur le point sélectionné (proposition)
+ */
+carouselDots.forEach((dot, i) => {
+	dot.addEventListener("click", () => {
+
+	//suppression de la class"dot_selected" du point que je quitte
+	carouselDots[currentIndex].classList.remove("dot_selected");
+
+	//index en cours non déterminé pour sélectionner celui voulu
+	currentIndex = i;
+
+	//ajout de la class "dot_selected" au point sélectionné
+	carouselDots[currentIndex].classList.add("dot_selected");
+
+	//mise à jour de l'image et du texte
+	bannerImg.src = "./assets/images/slideshow/" + slides[currentIndex].image;
+	changeText.innerHTML = slides[currentIndex].tagLine;
 	});
-
-
-
-
+});
